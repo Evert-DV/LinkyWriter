@@ -75,9 +75,11 @@ while True:
         f.write("\n =========== \n")
         f.write(response_text)
 
-    print(f"\n* written to {destination_file} *\n")
+    written_words = len(response_text.split(' '))
 
-api.reset_conversation()
+    print(f"\n* {int(written_words)} words written to {destination_file} *\n")
+
+# api.clear_conversations()
 api.driver.close()
 api.driver.quit()
 
@@ -93,4 +95,4 @@ for filename in os.listdir(directory):
         if os.path.isfile(filepath) or os.path.isdir(filepath):
             os.unlink(filepath)
     except Exception as e:
-        print(e)
+        print('exeption: ', e)
