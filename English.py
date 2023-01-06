@@ -1,5 +1,4 @@
 from pyChatGPT import ChatGPT
-from googletrans import Translator
 import random
 import os
 from DeepL import DeepL_Translator
@@ -9,7 +8,6 @@ session_token = "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0.._kyY2FxnKx85hu7_.MIYbg
 
 api = ChatGPT(session_token)
 
-keys_trans = Translator()
 translator = DeepL_Translator()
 
 destination_file = set_output_file()
@@ -30,7 +28,6 @@ while True:
         keywords = ''
 
         for w in zoekterm:
-            # translated = keys_trans.translate(w.strip(' '), src='nl', dest='en')
             keywords += f'"{w.strip(" ")}", '
 
         msg = f"Write a text of {int(n_words)} and {int(n_pars)} paragraphs. Make it {style[0]} and {style[1]}, " \
