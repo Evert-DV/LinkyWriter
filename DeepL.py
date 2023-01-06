@@ -23,7 +23,7 @@ class DeepL_Translator:
         self.input_field.clear()
         self.input_field.send_keys(text)
 
-        WebDriverWait(self.driver, 10).until(cond.element_to_be_clickable(('xpath',
+        WebDriverWait(self.driver, 30).until(cond.element_to_be_clickable(('xpath',
             '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/span[1]/span/span/button')))
         time.sleep(1)
 

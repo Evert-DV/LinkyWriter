@@ -57,7 +57,7 @@ while True:
     response_text = response["message"]
 
     if use_deepl:
-        with open('Char_count.txt', 'r+') as f:
+        with open('C:\\Users\\Evert\\Documents\\Python\\LinkyWriter\\Char_count.txt', 'r+') as f:
             contents = f.read()
             count = int(contents)
             count += len(response_text)
