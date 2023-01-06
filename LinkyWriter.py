@@ -11,7 +11,7 @@ translator = None
 destination_file = set_output_file()
 
 styles = {'nl': ['algemeen', 'informatief', 'professioneel', 'informeel', 'formeel', 'basic', 'oppervlakkig',
-                 'diepgaand', 'samenhangend', 'relaxed', 'educatief', 'eenvoudig', 'vrolijk', 'luchtig'],
+                 'diepgaand', 'samenhangend', 'relaxed', 'educatief', 'eenvoudig', 'vrolijk', 'luchtig', 'Vlaams'],
           'en': ['general purpose', 'informative', 'professional', 'informal', 'formal', 'basic', 'superficial',
                  'in-depth', 'coherent', 'light-hearted']}
 
@@ -77,6 +77,7 @@ while True:
 
     print(f"\n* written to {destination_file} *\n")
 
+api.reset_conversation()
 api.driver.close()
 api.driver.quit()
 
