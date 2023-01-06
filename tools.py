@@ -4,7 +4,7 @@ def set_output_file():
     if output_file[-4:] != '.txt':
         output_file += '.txt'
 
-    print(f"\n * Output file changed to {output_file} *")
+    print(f"\n* Output file changed to {output_file} *")
 
     return output_file
 
@@ -17,7 +17,7 @@ def set_words_pars():
         except ValueError:
             print("Enter a valid integer")
 
-    pars = int(words // 100) + 2
-    words *= 1.12
+    pars = int(words // 100) * 2
+    #words *= 1.12
 
     return words, pars
