@@ -16,9 +16,8 @@ class DeepL_Translator:
 
         self.cookiebanner()
 
-        # self.button_xpath = '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/div[' \
-        #                     '2]/span[2]/span/span/button'
-        self.copy_css = 'div.lmt__target_toolbar__copy button'
+        self.copy_xpath = '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/div[' \
+                            '2]/span[2]/span/span/button'
 
     def translate(self, text):
         self.input_field.clear()
@@ -28,7 +27,7 @@ class DeepL_Translator:
             '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/span[1]/span/span/button')))
         time.sleep(1)
 
-        copy = self.driver.find_element('css selector', self.copy_css)
+        copy = self.driver.find_element('xpath', self.copy_xpath)
         copy.click()
 
         output_text = clipboard.paste()

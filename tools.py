@@ -18,6 +18,5 @@ def set_words_pars():
             print("Enter a valid integer")
 
     pars = int(words // 100) * 2
-    #words *= 1.12
 
     return words, pars
