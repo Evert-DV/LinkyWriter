@@ -1,9 +1,7 @@
-import random
-
-
 def set_output_file():
     output_file = input("Destination file (.txt): ")
 
+    # add '.txt' extension if not present already
     if output_file[-4:] != '.txt':
         output_file += '.txt'
 
@@ -12,7 +10,11 @@ def set_output_file():
     return output_file
 
 
-def set_words_pars():
+def set_words_paragraphs():
+    """Sets the optimal number of paragraphs for accurate and easily editable text length, based on the provided
+    number of words."""
+
+    # Make sure input is an integer
     while True:
         try:
             words = int(input("Number of words: "))
@@ -20,9 +22,9 @@ def set_words_pars():
         except ValueError:
             print("Enter a valid integer")
 
-    goal = words // 100
-    pars = words // 60
-    pars += (goal - pars % goal)
+    goal = words // 100                 # 'goal' is how many paragraphs the text should ideally have
+    pars = words // 60                  # ChatGPT tends to write ~60-word paragraphs
+    pars += (goal - pars % goal)        # Add the necessary number of paragraphs to obtain a multiple of 'goal'
 
     return words, pars
 
