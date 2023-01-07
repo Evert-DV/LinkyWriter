@@ -11,9 +11,10 @@ def set_output_file():
 
 
 def set_words_paragraphs():
-    """Sets the optimal number of paragraphs for accurate and easily editable text length, based on the provided
-    number of words."""
-
+    """
+    Sets the optimal number of paragraphs for accurate and easily editable text length, based on the provided
+    number of words.
+    """
     # Make sure input is an integer
     while True:
         try:
@@ -23,7 +24,7 @@ def set_words_paragraphs():
             print("Enter a valid integer")
 
     goal = words // 100                 # 'goal' is how many paragraphs the text should ideally have
-    pars = words // 60                  # ChatGPT tends to write ~60-word paragraphs
+    pars = words // 60                  # ChatGPT tends to write ~50-word paragraphs
     pars += (goal - pars % goal)        # Add the necessary number of paragraphs to obtain a multiple of 'goal'
 
     return words, pars
@@ -39,3 +40,14 @@ def create_prompt(n_words, n_pars, style, keywords, use_deepl):
               f"{style[1]}, maak het niet commercieel of adverterend. De tekst moet de zoekterm(en) " \
               f"{keywords.strip(', ')} bevatten. Geef elke alinea een nummer."
     return msg
+
+def update_count(text):
+    with open('C:\\Users\\Evert\\Documents\\Python\\LinkyWriter\\Char_count.txt', 'r+') as f:
+        contents = f.read()
+        count = int(contents)
+        count += len(text.replace(' ', ''))
+        f.seek(0)
+        f.write(str(count))
+
+        if count > 4000:
+            print(f"\n** character count nearing limit! Count: {int(count)} **")

@@ -6,8 +6,9 @@ import time
 
 
 class DeepL_Translator:
-    """Uses a Selenium webdriver to acces the free online DeepL webpage and translate text."""
-
+    """
+    Uses a Selenium webdriver to acces the free online DeepL webpage and translate text.
+    """
     def __init__(self, driver=webdriver.Chrome()):
         # Set up the webdriver
         self.driver = driver
@@ -15,27 +16,28 @@ class DeepL_Translator:
         # Access the webpage
         self.driver.get("https://www.deepl.com/translator")
 
-        # Find the input text area in the html code of the page
-        self.input_css = 'div.lmt__inner_textarea_container textarea'
-        self.input_field = self.driver.find_element('css selector', self.input_css)
-
         # Click away the cookie banner
         self.cookie_banner()
 
-        # Define the 'copy translation' button location from the html code
+        # Find the input text area in the html code of the page
+        self.input_css = 'div.lmt__inner_textarea_container textarea'
+        WebDriverWait(self.driver, 5).until(cond.presence_of_element_located(('css selector', self.input_css)))
+        self.input_field = self.driver.find_element('css selector', self.input_css)
+
+        # Define the 'copy translation' and 'listen' button location from the html code
         self.copy_xpath = '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/div[2]/span[' \
                           '2]/span/span/button'
+        self.listen_xpath = '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/span[1]' \
+                            '/span/span/button'
 
     def translate(self, text):
         # Clear the text input field and send the text to translate
         self.input_field.clear()
         self.input_field.send_keys(text)
 
-        # Wait until the copy button appears (i.e. the translation is finished)
-        WebDriverWait(self.driver, 30).until(cond.element_to_be_clickable(('xpath',
-                                                                           '//*[@id="panelTranslateText"]/div[1]/div['
-                                                                           '2]/section[2]/div[3]/div[6]/div/div/span[1]'
-                                                                           '/span/span/button')))
+        # Wait until the 'listen' button appears (i.e. the translation is finished)
+        WebDriverWait(self.driver, 30).until(cond.element_to_be_clickable(('xpath', self.listen_xpath)))
+        WebDriverWait(self.driver, 5).until(cond.presence_of_element_located(('xpath', self.copy_xpath)))
         time.sleep(1)
 
         # Click the copy button, translation is now on clipboard
@@ -49,6 +51,7 @@ class DeepL_Translator:
     def cookie_banner(self):
         # Locate the 'accept' button on the cookie banner and click it
         cookie_xpath = '//*[@id="dl_cookieBanner"]/div/div/div/span/div[2]/button[1]'
+        WebDriverWait(self.driver, 10).until(cond.element_to_be_clickable(('xpath', cookie_xpath)))
         cookie_button = self.driver.find_element('xpath', cookie_xpath)
         cookie_button.click()
 
