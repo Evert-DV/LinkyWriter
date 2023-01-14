@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as cond
 import clipboard
 import time
+import base64
 
 
 class DeepL_Translator:
@@ -15,10 +16,19 @@ class DeepL_Translator:
         self.driver = driver
 
         # Access the webpage
-        self.driver.get("https://www.deepl.com/translator")
+        self.driver.get("https://www.deepl.com/nl/login/")
+
+        # Login
+        self.login()
 
         # Click away the cookie banner
         self.cookie_banner()
+
+        # Click the "use free services" button
+        free_xpath = '//*[@id="headlessui-dialog-panel-2"]/div/div/button'
+        free_button = self.driver.find_element('xpath', free_xpath)
+        free_button.click()
+
 
         # Find the input text area in the html code of the page
         self.input_css = 'div.lmt__inner_textarea_container textarea'
@@ -57,6 +67,23 @@ class DeepL_Translator:
         WebDriverWait(self.driver, 10).until(cond.element_to_be_clickable(('xpath', cookie_xpath)))
         cookie_button = self.driver.find_element('xpath', cookie_xpath)
         cookie_button.click()
+
+    def login(self):
+        email_xpath = '//*[@id="gatsby-focus-wrapper"]/div/main/form/label[1]/div[1]/div/div[2]/input'
+        password_xpath = '//*[@id="gatsby-focus-wrapper"]/div/main/form/label[2]/div[1]/div/div[2]/input'
+
+        WebDriverWait(self.driver, 5).until(cond.presence_of_element_located(('xpath', email_xpath)))
+
+        email_field = self.driver.find_element('xpath', email_xpath)
+        password_field = self.driver.find_element('xpath', password_xpath)
+
+        with open("credentials.txt", 'r') as c:
+            contents = c.read()
+
+        email_field.send_keys("evertdevroey@gmail.com")
+        password_field.send_keys(base64.b64decode(contents[1:]).decode("utf-8"))
+        password_field.send_keys("\n")
+
 
     def __del__(self):
         # Destructor
