@@ -11,6 +11,7 @@ class DeepL_Translator:
     """
     def __init__(self, driver=webdriver.Chrome()):
         # Set up the webdriver
+        self.input_field = None
         self.driver = driver
 
         # Access the webpage
@@ -21,9 +22,7 @@ class DeepL_Translator:
 
         # Find the input text area in the html code of the page
         self.input_css = 'div.lmt__inner_textarea_container textarea'
-        WebDriverWait(self.driver, 5).until(cond.presence_of_element_located(('css selector', self.input_css)))
-        self.input_field = self.driver.find_element('css selector', self.input_css)
-
+        
         # Define the 'copy translation' and 'listen' button location from the html code
         self.copy_xpath = '//*[@id="panelTranslateText"]/div[1]/div[2]/section[2]/div[3]/div[6]/div/div/div[2]/span[' \
                           '2]/span/span/button'
@@ -31,6 +30,10 @@ class DeepL_Translator:
                             '/span/span/button'
 
     def translate(self, text):
+        # find input field
+        WebDriverWait(self.driver, 5).until(cond.presence_of_element_located(('css selector', self.input_css)))
+        self.input_field = self.driver.find_element('css selector', self.input_css)
+        
         # Clear the text input field and send the text to translate
         self.input_field.clear()
         self.input_field.send_keys(text)

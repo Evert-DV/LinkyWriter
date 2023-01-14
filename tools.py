@@ -1,3 +1,6 @@
+from math import ceil
+
+
 def set_output_file():
     output_file = input("Destination file (.txt): ")
 
@@ -23,9 +26,9 @@ def set_words_paragraphs():
         except ValueError:
             print("Enter a valid integer")
 
-    goal = words // 100                 # 'goal' is how many paragraphs the text should ideally have
-    pars = words // 60                  # ChatGPT tends to write ~50-word paragraphs
-    pars += (goal - pars % goal)        # Add the necessary number of paragraphs to obtain a multiple of 'goal'
+    goal = ceil(words / 110)                                # 'goal' is how many paragraphs the text should have
+    pars = round(words / 50)                                # ChatGPT tends to write ~50-word paragraphs
+    pars += (goal * 0 ** (pars % goal == 0) - pars % goal)  # Add paragraphs to obtain a multiple of 'goal'
 
     return words, pars
 
@@ -41,6 +44,7 @@ def create_prompt(n_words, n_pars, style, keywords, use_deepl):
               f"{keywords.strip(', ')} bevatten. Geef elke alinea een nummer."
     return msg
 
+
 def update_count(text):
     with open('C:\\Users\\Evert\\Documents\\Python\\LinkyWriter\\Char_count.txt', 'r+') as f:
         contents = f.read()
@@ -49,5 +53,5 @@ def update_count(text):
         f.seek(0)
         f.write(str(count))
 
-        if count > 4000:
+        if count > 400000:
             print(f"\n** character count nearing limit! Count: {int(count)} **")
